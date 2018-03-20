@@ -1,5 +1,5 @@
 %% Projeto 1 de FCS 1/2018
-% Alvaro Torres Vieira - 14/0
+% Alvaro Torres Vieira - 14/0079661
 % Victor Araujo Vieira - 14/0032801
 
 %% Carregando o dataset fisher iris e inicializando as variaveis
