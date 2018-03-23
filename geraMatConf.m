@@ -20,6 +20,7 @@ YMat(idxLinearY) = 1;
 
 figure;
 plotconfusion(YMat, labelMat);
+pause;
 
 end
 

@@ -13,36 +13,28 @@ numCadaClasse = numAmostras/3;
 
 % Numero de amostras pra treino
 nTreino = numAmostras*proporcaoTreino;
+nTeste = numAmostras - nTreino;
 
 % Criacao das variaveis que serao usadas para gravar os dados de treino e
 % teste
 medidasTreino = zeros(nTreino, size(medidas, 2));
-medidasTeste = zeros(numAmostras - nTreino, size(medidas, 2));
+medidasTeste = zeros(nTeste, size(medidas, 2));
 
-% Quantidade de cada classe que vao ser usadas para treino e teste
-numPorClasseTreino = numCadaClasse*proporcaoTreino;
-numPorClasseTeste = numCadaClasse - numPorClasseTreino;
+% Gerando 150 numeros diferentes e aleatorios de 1 a 150 que serao usados
+% tanto para o treino quanto para o teste
+numerosAleatorios = randperm(150);
 
-% Construindo as variaveis de treinamento e teste
+% Pega os 105 primeiros numeros aleatorios para usar para treinar os
+% modelos
+medidasTreino(1:nTreino, :) = medidas(numerosAleatorios(1:nTreino), :);
+% Pega os outros 45 numeros aleatorios restantes para serem usados para
+% testar os modelos treinados
+medidasTeste(1:nTeste, :) = medidas(numerosAleatorios(nTreino + 1 : numAmostras), :);
 
-% primeira classe
-medidasTreino(1:numPorClasseTreino, :) = medidas(1:numPorClasseTreino, :);
-medidasTeste(1:numPorClasseTeste, :) = medidas(numPorClasseTreino + 1 : numCadaClasse, :);
-respostasTreino(1:numPorClasseTreino, :) = respostas(1:numPorClasseTreino, :);
-respostasTeste(1:numPorClasseTeste, :) = respostas(numPorClasseTreino + 1 : numCadaClasse, :);
-
-% segunda classe
-medidasTreino(numPorClasseTreino + 1 : numPorClasseTreino*2, :) = medidas(numCadaClasse + 1 : numCadaClasse + numPorClasseTreino, :);
-medidasTeste(numPorClasseTeste + 1 : numPorClasseTeste*2, :) = medidas(numCadaClasse + numPorClasseTreino + 1 : numCadaClasse*2, :);
-respostasTreino(numPorClasseTreino + 1 : numPorClasseTreino*2, :) = respostas(numCadaClasse + 1 : numCadaClasse + numPorClasseTreino, :);
-respostasTeste(numPorClasseTeste + 1 : numPorClasseTeste*2, :) = respostas(numCadaClasse + numPorClasseTreino + 1 : numCadaClasse*2, :);
-
-% terceira classe
-medidasTreino(numPorClasseTreino*2 + 1 : numPorClasseTreino*3, :) = medidas(numCadaClasse*2 + 1 : numCadaClasse*2 + numPorClasseTreino, :);
-medidasTeste(numPorClasseTeste*2 + 1 : numPorClasseTeste*3, :) = medidas(numCadaClasse*2 + numPorClasseTreino + 1 : numCadaClasse*3, :);
-respostasTreino(numPorClasseTreino*2 + 1 : numPorClasseTreino*3, :) = respostas(numCadaClasse*2 + 1 : numCadaClasse*2 + numPorClasseTreino, :);
-respostasTeste(numPorClasseTeste*2 + 1 : numPorClasseTeste*3, :) = respostas(numCadaClasse*2 + numPorClasseTreino + 1 : numCadaClasse*3, :);
-
+% Gerando as variaveis que serao usadas para treino e teste dos modelos, e
+% contem as respostas de cada uma das etapas
+respostasTreino(1:nTreino, :) = respostas(numerosAleatorios(1:nTreino), :);
+respostasTeste(1:nTeste, :) = respostas(numerosAleatorios(nTreino + 1 : numAmostras), :);
 
 %% Criando os modelos para o treinamento usando o metodo Knn
 % O standardize eh para padronizar as escalas, de forma a nao atrapalhar no
